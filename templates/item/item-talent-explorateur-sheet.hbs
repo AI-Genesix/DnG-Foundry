@@ -1,0 +1,52 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Nom du talent"/>
+      </h1>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab" data-group="primary" data-tab="description">
+      
+      <div class="form-group">
+        <label for="system.rank">Rang du talent</label>
+        <select name="system.rank" data-dtype="Number" class="talent-rank-select">
+          {{#select system.rank}}
+          <option value="1">Rang 1</option>
+          <option value="2">Rang 2</option>
+          <option value="3">Rang 3</option>
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="system.predefined_talent">Talent prédéfini</label>
+        <select name="system.predefined_talent" data-dtype="String" class="talent-predefined-select">
+          <option value="">-- Choisir un talent prédéfini ou laisser vide pour personnalisé --</option>
+          {{#select system.predefined_talent}}
+          {{#each config.talentsExplorateur as |talent key|}}
+            <option value="{{key}}" data-name="{{talent.name}}" data-rank="{{talent.rank}}" data-effect="{{talent.effect}}">{{talent.name}} (Rang {{talent.rank}})</option>
+          {{/each}}
+          {{/select}}
+        </select>
+        <p class="hint">Sélectionnez un talent prédéfini pour auto-remplir le nom, rang et effet.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="system.description">Description / Effet</label>
+        <textarea name="system.description" rows="8" placeholder="Décrivez l'effet de ce talent d'explorateur...">{{system.description}}</textarea>
+        <p class="hint">Cette description sera automatiquement remplie si vous sélectionnez un talent prédéfini.</p>
+      </div>
+
+    </div>
+  </section>
+
+</form>

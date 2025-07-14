@@ -35,7 +35,11 @@
       "Type": "Type",
       "Grade": "Grade", 
       "Style": "Style",
-      "BaroudeurAmeliorations": "Améliorations Baroudeur"
+      "BaroudeurAmeliorations": "Améliorations Baroudeur",
+      "TraitsEspece": "Traits d'Espèce",
+      "TalentsExplorateur": "Talents d'Explorateur",
+      "Domaines": "Domaines",
+      "Handicaps": "Handicaps"
     },
     "Pokemon": {
       "Classe": {

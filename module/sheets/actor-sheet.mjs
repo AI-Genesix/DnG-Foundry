@@ -105,18 +105,10 @@ export class DnGActorSheet extends ActorSheet {
     // Initialize containers.
     const gear = [];
     const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
-    };
+    const traitsEspece = [];
+    const talentsExplorateur = [];
+    const domaines = [];
+    const handicaps = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -129,18 +121,28 @@ export class DnGActorSheet extends ActorSheet {
       else if (i.type === 'feature') {
         features.push(i);
       }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.system.spellLevel != undefined) {
-          spells[i.system.spellLevel].push(i);
-        }
+      // Append to DnG effect types.
+      else if (i.type === 'trait_espece') {
+        traitsEspece.push(i);
+      }
+      else if (i.type === 'talent_explorateur') {
+        talentsExplorateur.push(i);
+      }
+      else if (i.type === 'domaine') {
+        domaines.push(i);
+      }
+      else if (i.type === 'handicap') {
+        handicaps.push(i);
       }
     }
 
     // Assign and return
     context.gear = gear;
     context.features = features;
-    context.spells = spells;
+    context.traitsEspece = traitsEspece;
+    context.talentsExplorateur = talentsExplorateur;
+    context.domaines = domaines;
+    context.handicaps = handicaps;
   }
 
   /* -------------------------------------------- */
@@ -152,7 +154,19 @@ export class DnGActorSheet extends ActorSheet {
     // Render the item sheet for viewing/editing prior to the editable check.
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
-      const item = this.actor.items.get(li.data('itemId'));
+      const itemId = li.data('itemId');
+      const item = this.actor.items.get(itemId);
+      
+      if (!item) {
+        console.error('Item not found with ID:', itemId);
+        return;
+      }
+      
+      if (!item.sheet) {
+        console.error('Item sheet not available for item:', item);
+        return;
+      }
+      
       item.sheet.render(true);
     });
 
@@ -166,7 +180,19 @@ export class DnGActorSheet extends ActorSheet {
     // Delete Inventory Item
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
-      const item = this.actor.items.get(li.data('itemId'));
+      const itemId = li.data('itemId');
+      const item = this.actor.items.get(itemId);
+      
+      if (!item) {
+        console.error('Item not found with ID:', itemId);
+        return;
+      }
+      
+      if (!item.delete) {
+        console.error('Item delete method not available for item:', item);
+        return;
+      }
+      
       item.delete();
       li.slideUp(200, () => this.render(false));
     });

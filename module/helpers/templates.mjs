@@ -10,6 +10,15 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/dng/templates/actor/parts/actor-items.hbs',
     'systems/dng/templates/actor/parts/actor-spells.hbs',
     'systems/dng/templates/actor/parts/actor-effects.hbs',
+    // Item sheets
+    'systems/dng/templates/item/item-sheet.hbs',
+    'systems/dng/templates/item/item-feature-sheet.hbs',
+    'systems/dng/templates/item/item-item-sheet.hbs',
+    'systems/dng/templates/item/item-spell-sheet.hbs',
+    'systems/dng/templates/item/item-trait-espece-sheet.hbs',
+    'systems/dng/templates/item/item-talent-explorateur-sheet.hbs',
+    'systems/dng/templates/item/item-domaine-sheet.hbs',
+    'systems/dng/templates/item/item-handicap-sheet.hbs',
     // Item partials
     'systems/dng/templates/item/parts/item-effects.hbs',
   ]);

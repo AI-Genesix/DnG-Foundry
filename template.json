@@ -139,7 +139,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "feature", "trait_espece", "talent_explorateur", "domaine", "handicap"],
     "templates": {
       "base": {
         "description": ""
@@ -154,9 +154,24 @@
     "feature": {
       "templates": ["base"]
     },
-    "spell": {
+    "trait_espece": {
       "templates": ["base"],
-      "spellLevel": 1
+      "predefined_trait": "",
+      "description": ""
+    },
+    "talent_explorateur": {
+      "templates": ["base"],
+      "predefined_talent": "",
+      "rank": 1,
+      "description": ""
+    },
+    "domaine": {
+      "templates": ["base"],
+      "description": ""
+    },
+    "handicap": {
+      "templates": ["base"],
+      "description": ""
     }
   }
 }

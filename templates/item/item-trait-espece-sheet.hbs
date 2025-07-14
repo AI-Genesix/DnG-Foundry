@@ -1,0 +1,41 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Nom du trait"/>
+      </h1>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab" data-group="primary" data-tab="description">
+      
+      <div class="form-group">
+        <label for="system.predefined_trait">Trait prédéfini</label>
+        <select name="system.predefined_trait" data-dtype="String" class="trait-predefined-select">
+          <option value="">-- Choisir un trait prédéfini ou laisser vide pour personnalisé --</option>
+          {{#select system.predefined_trait}}
+          {{#each config.traitsEspece as |trait key|}}
+            <option value="{{key}}" data-name="{{trait.name}}" data-effect="{{trait.effect}}">{{trait.name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+        <p class="hint">Sélectionnez un trait prédéfini pour auto-remplir le nom et l'effet.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="system.description">Description / Effet</label>
+        <textarea name="system.description" rows="8" placeholder="Décrivez l'effet de ce trait d'espèce...">{{system.description}}</textarea>
+        <p class="hint">Cette description sera automatiquement remplie si vous sélectionnez un trait prédéfini.</p>
+      </div>
+
+    </div>
+  </section>
+
+</form>

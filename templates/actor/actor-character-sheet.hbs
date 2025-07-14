@@ -53,7 +53,6 @@
     <a class="item" data-tab="features">Capacités</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="items">Objets</a>
-    <a class="item" data-tab="spells">Sorts</a>
     <a class="item" data-tab="effects">Effets</a>
   </nav>
 
@@ -224,12 +223,7 @@
        {{> "systems/dng/templates/actor/parts/actor-items.hbs"}}
     </div>
 
-    {{!-- Owned Spells Tab --}}
-    <div class="tab spells" data-group="primary" data-tab="spells">
-      {{> "systems/dng/templates/actor/parts/actor-spells.hbs"}}
-    </div>
-
-    {{!-- Active Effects Tab --}}
+    {{!-- DnG Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
       {{> "systems/dng/templates/actor/parts/actor-effects.hbs"}}
     </div>
