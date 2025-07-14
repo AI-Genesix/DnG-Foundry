@@ -1,0 +1,162 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "resources": {
+          "pv": {
+            "value": 10,
+            "min": 0,
+            "max": 10
+          },
+          "pp": {
+            "value": 5,
+            "min": 0,
+            "max": 5
+          },
+          "pc": {
+            "value": 3,
+            "min": 0,
+            "max": 3
+          },
+          "ph": {
+            "value": 0,
+            "min": 0,
+            "max": 4
+          }
+        },
+        "biography": ""
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "attributes": {
+        "level": {
+          "value": 1,
+          "min": 1,
+          "max": 20
+        }
+      },
+      "pokemon": {
+        "classe": {
+          "value": "non_defini"
+        },
+        "espece": {
+          "value": ""
+        },
+        "types": {
+          "primary": {
+            "value": ""
+          },
+          "secondary": {
+            "value": ""
+          }
+        },
+        "grade": {
+          "value": "rookie"
+        },
+        "style": {
+          "value": "complet"
+        }
+      },
+      "baroudeur": {
+        "ameliorations": {
+          "value": 0,
+          "min": 0,
+          "max": 3
+        }
+      },
+      "stats": {
+        "terrain": {
+          "force": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "agilite": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "instinct": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "sagesse": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "sympathie": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "charisme": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          }
+        },
+        "combat": {
+          "attaque": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "defense": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "atk_spe": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "def_spe": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "precision": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          },
+          "esquive": {
+            "value": 1,
+            "min": 1,
+            "max": 5
+          }
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"],
+      "cr": 0
+    }
+  },
+  "Item": {
+    "types": ["item", "feature", "spell"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    }
+  }
+}

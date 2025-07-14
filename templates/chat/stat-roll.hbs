@@ -1,0 +1,31 @@
+<div class="dng-roll">
+  <div class="roll-header">
+    <h3>{{statName}} - {{actor.name}}</h3>
+    {{#if isCritical}}
+      <span class="critical">{{localize "DNG.Roll.Critical"}}</span>
+    {{/if}}
+  </div>
+  
+  <div class="roll-details">
+    <div class="stat-info">
+      <strong>Valeur:</strong> {{statValue}} 
+      <strong>{{localize "DNG.Roll.StatDie"}}:</strong> d{{statDie}}
+    </div>
+    
+    <div class="dice-results">
+      <div class="stat-roll">
+        <label>{{localize "DNG.Roll.StatDie"}}:</label>
+        <span class="roll-result">{{statRoll.total}}</span>
+      </div>
+      
+      <div class="crit-roll {{#if isCritical}}critical{{/if}}">
+        <label>{{localize "DNG.Roll.CritDie"}}:</label>
+        <span class="roll-result">{{critRoll.total}}</span>
+      </div>
+    </div>
+    
+    <div class="total-result">
+      <strong>{{localize "DNG.Roll.Total"}}: {{total}}</strong>
+    </div>
+  </div>
+</div>

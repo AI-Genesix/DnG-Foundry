@@ -1,0 +1,645 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3/span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4/span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 6/span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7/span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8/span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9/span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10/span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11/span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12/span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-start-2 {
+  grid-column-start: 2;
+}
+
+.grid-start-3 {
+  grid-column-start: 3;
+}
+
+.grid-start-4 {
+  grid-column-start: 4;
+}
+
+.grid-start-5 {
+  grid-column-start: 5;
+}
+
+.grid-start-6 {
+  grid-column-start: 6;
+}
+
+.grid-start-7 {
+  grid-column-start: 7;
+}
+
+.grid-start-8 {
+  grid-column-start: 8;
+}
+
+.grid-start-9 {
+  grid-column-start: 9;
+}
+
+.grid-start-10 {
+  grid-column-start: 10;
+}
+
+.grid-start-11 {
+  grid-column-start: 11;
+}
+
+.grid-start-12 {
+  grid-column-start: 12;
+}
+
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flexshrink {
+  flex: 0;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flexlarge {
+  flex: 2;
+}
+
+.align-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.align-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.align-center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Styles limited to dng sheets */
+.dng .item-form {
+  font-family: "Roboto", sans-serif;
+}
+.dng .sheet-header {
+  flex: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.dng .sheet-header .profile-img {
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.dng .sheet-header .header-fields {
+  flex: 1;
+}
+.dng .sheet-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+}
+.dng .sheet-header h1.charname input {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.dng .sheet-tabs {
+  flex: 0;
+}
+.dng .sheet-body,
+.dng .sheet-body .tab,
+.dng .sheet-body .tab .editor {
+  height: 100%;
+}
+.dng .tox .tox-editor-container {
+  background: #fff;
+}
+.dng .tox .tox-edit-area {
+  padding: 0 8px;
+}
+.dng .resource-label {
+  font-weight: bold;
+}
+.dng .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.dng .items-header > * {
+  font-size: 14px;
+  text-align: center;
+}
+.dng .items-header .item-name {
+  font-weight: bold;
+  padding-left: 5px;
+  text-align: left;
+  display: flex;
+}
+.dng .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #444;
+}
+.dng .items-list .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.dng .items-list .item-name {
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+}
+.dng .items-list .item-name h3, .dng .items-list .item-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.dng .items-list .item-controls {
+  display: flex;
+  flex: 0 0 100px;
+  justify-content: flex-end;
+}
+.dng .items-list .item-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+.dng .items-list .item {
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.dng .items-list .item:last-child {
+  border-bottom: none;
+}
+.dng .items-list .item .item-name {
+  color: #191813;
+}
+.dng .items-list .item .item-name .item-image {
+  flex: 0 0 30px;
+  height: 30px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+.dng .items-list .item-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.dng .items-list .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.dng .items-list .items-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+.dng .items-list .items-header .item-name {
+  padding-left: 5px;
+  text-align: left;
+}
+.dng .item-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+.dng .effects .item .effect-source,
+.dng .effects .item .effect-duration,
+.dng .effects .item .effect-controls {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.dng .effects .item .effect-controls {
+  border: none;
+}
+
+/* Chat message styles for DnG rolls */
+.dng-roll {
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
+  background: #f8f9fa;
+}
+
+.dng-roll .roll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.dng-roll .roll-header h3 {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.dng-roll .critical {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.dng-roll .stat-info {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.dng-roll .dice-results {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.dng-roll .stat-roll,
+.dng-roll .crit-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: white;
+}
+
+.dng-roll .crit-roll.critical {
+  border-color: #e74c3c;
+  background: #ffeaea;
+}
+
+.dng-roll .roll-result {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.dng-roll .crit-roll.critical .roll-result {
+  color: #e74c3c;
+}
+
+.dng-roll .total-result {
+  text-align: center;
+  font-size: 1.2em;
+  color: #2c3e50;
+  padding: 5px;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+/* DnG Character Sheet Styles */
+.dng .stats-section {
+  margin: 10px 0;
+}
+
+.dng .terrain-stats,
+.dng .combat-stats {
+  border: 1px solid #c9c7b8;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.dng .terrain-stats h3,
+.dng .combat-stats h3 {
+  margin: 0 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #c9c7b8;
+  text-align: center;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.dng .stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dng .stat-row {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #f8f9fa;
+}
+
+.dng .stat-row:hover {
+  background: #e9ecef;
+}
+
+.dng .stat-label {
+  flex: 1;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.dng .stat-label:hover {
+  color: #007bff;
+}
+
+.dng .stat-row input[type="text"] {
+  width: 40px;
+  text-align: center;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.dng .stat-die {
+  font-weight: bold;
+  color: #6c757d;
+  min-width: 30px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.dng .resources {
+  margin-bottom: 10px;
+}
+
+.dng .resource {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.dng .level-section {
+  margin-top: 10px;
+  max-width: 200px;
+}
+
+.dng .level-section .resource {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+
+/* Pokemon Info Tab Styles */
+.dng .pokemon-info {
+  padding: 10px;
+}
+
+.dng .pokemon-info .form-group {
+  margin-bottom: 10px;
+}
+
+.dng .pokemon-info label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #2c3e50;
+  font-size: 13px;
+}
+
+.dng .pokemon-info input[type="text"],
+.dng .pokemon-info select {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.2;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.dng .pokemon-info input[type="text"]:focus,
+.dng .pokemon-info select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+.dng .types-section {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+
+.dng .types-section h3 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.dng .type-select {
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.dng .baroudeur-section {
+  margin-top: 15px;
+  padding: 10px;
+  border: 2px solid #28a745;
+  border-radius: 5px;
+  background: #e8f5e8;
+}
+
+.dng .baroudeur-section h3 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: #155724;
+  font-size: 16px;
+}
+
+.dng .baroudeur-section .resource {
+  background: white;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.dng .baroudeur-max {
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Grid improvements for pokemon info */
+.dng .pokemon-info .grid-2col {
+  gap: 15px;
+}
+
+.dng .pokemon-info .grid-2col .form-group {
+  margin-bottom: 0;
+}
+
+/* Fix for select dropdown text truncation */
+.dng .pokemon-info select option {
+  padding: 5px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Ensure selects have proper height and spacing */
+.dng .pokemon-info select {
+  appearance: menulist;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+}
+
+/* Better spacing for form grids */
+.dng .pokemon-info .grid {
+  gap: 10px;
+  align-items: end;
+}

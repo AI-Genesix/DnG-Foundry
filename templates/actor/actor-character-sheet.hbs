@@ -1,0 +1,238 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Nom du personnage"/></h1>
+      
+      {{!-- Ressources DnG --}}
+      <div class="resources grid grid-4col">
+        <div class="resource flex-group-center">
+          <label for="system.resources.pv.value" class="resource-label">{{localize "DNG.Resource.PV.abbr"}}</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.resources.pv.value" value="{{system.resources.pv.value}}" data-dtype="Number"/>
+            <span> / </span>
+            <input type="text" name="system.resources.pv.max" value="{{system.resources.pv.max}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="system.resources.pp.value" class="resource-label">{{localize "DNG.Resource.PP.abbr"}}</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.resources.pp.value" value="{{system.resources.pp.value}}" data-dtype="Number"/>
+            <span> / </span>
+            <input type="text" name="system.resources.pp.max" value="{{system.resources.pp.max}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="system.resources.pc.value" class="resource-label">{{localize "DNG.Resource.PC.abbr"}}</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.resources.pc.value" value="{{system.resources.pc.value}}" data-dtype="Number"/>
+            <span> / </span>
+            <input type="text" name="system.resources.pc.max" value="{{system.resources.pc.max}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="system.resources.ph.value" class="resource-label">{{localize "DNG.Resource.PH.abbr"}}</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.resources.ph.value" value="{{system.resources.ph.value}}" data-dtype="Number"/>
+            <span> / 4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="info">Informations</a>
+    <a class="item" data-tab="stats">Statistiques</a>
+    <a class="item" data-tab="features">Capacités</a>
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="items">Objets</a>
+    <a class="item" data-tab="spells">Sorts</a>
+    <a class="item" data-tab="effects">Effets</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Informations Pokémon Tab --}}
+    <div class="tab info" data-group="primary" data-tab="info">
+      <section class="pokemon-info">
+        
+        {{!-- Niveau et Classe --}}
+        <div class="grid grid-2col">
+          <div class="form-group">
+            <label for="system.attributes.level.value">{{localize "DNG.SheetLabels.Level"}}</label>
+            <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}" 
+                   data-dtype="Number" min="1" max="20"/>
+          </div>
+          
+          <div class="form-group">
+            <label for="system.pokemon.classe.value">{{localize "DNG.SheetLabels.Class"}}</label>
+            <select name="system.pokemon.classe.value" data-dtype="String">
+              {{#select system.pokemon.classe.value}}
+              {{#each config.pokemonClasses as |name key|}}
+                <option value="{{key}}">{{localize name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        {{!-- Espèce --}}
+        <div class="form-group">
+          <label for="system.pokemon.espece.value">{{localize "DNG.SheetLabels.Species"}}</label>
+          <input type="text" name="system.pokemon.espece.value" value="{{system.pokemon.espece.value}}" 
+                 data-dtype="String" placeholder="Nom de l'espèce Pokémon"/>
+        </div>
+
+        {{!-- Types --}}
+        <div class="types-section">
+          <h3>{{localize "DNG.SheetLabels.Type"}}</h3>
+          <div class="grid grid-2col">
+            <div class="form-group">
+              <label for="system.pokemon.types.primary.value">Type Principal</label>
+              <select name="system.pokemon.types.primary.value" data-dtype="String" 
+                      class="type-select" data-type-field="primary">
+                <option value="">-- Sélectionner --</option>
+                {{#select system.pokemon.types.primary.value}}
+                {{#each config.pokemonTypes as |name key|}}
+                  <option value="{{key}}" data-color="{{lookup @root.config.typeColors key}}">{{localize name}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="system.pokemon.types.secondary.value">Type Secondaire</label>
+              <select name="system.pokemon.types.secondary.value" data-dtype="String" 
+                      class="type-select" data-type-field="secondary">
+                <option value="">-- Aucun --</option>
+                {{#select system.pokemon.types.secondary.value}}
+                {{#each config.pokemonTypes as |name key|}}
+                  <option value="{{key}}" data-color="{{lookup @root.config.typeColors key}}">{{localize name}}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {{!-- Grade et Style --}}
+        <div class="grid grid-2col">
+          <div class="form-group">
+            <label for="system.pokemon.grade.value">{{localize "DNG.SheetLabels.Grade"}}</label>
+            <select name="system.pokemon.grade.value" data-dtype="String">
+              {{#select system.pokemon.grade.value}}
+              {{#each config.pokemonGrades as |name key|}}
+                <option value="{{key}}">{{localize name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="system.pokemon.style.value">{{localize "DNG.SheetLabels.Style"}}</label>
+            <select name="system.pokemon.style.value" data-dtype="String">
+              {{#select system.pokemon.style.value}}
+              {{#each config.pokemonStyles as |name key|}}
+                <option value="{{key}}">{{localize name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+        </div>
+
+        {{!-- Améliorations Baroudeur (conditionnelles) --}}
+        {{#if (eq system.pokemon.classe.value "baroudeur")}}
+        <div class="baroudeur-section">
+          <h3>{{localize "DNG.SheetLabels.BaroudeurAmeliorations"}}</h3>
+          <div class="resource flex-group-center">
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.baroudeur.ameliorations.value" 
+                     value="{{system.baroudeur.ameliorations.value}}" data-dtype="Number"/>
+              <span> / </span>
+              <span class="baroudeur-max">{{system.baroudeur.ameliorations.max}}</span>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+
+      </section>
+    </div>
+
+    {{!-- Statistiques Tab --}}
+    <div class="tab stats" data-group="primary" data-tab="stats">
+      <section class="grid grid-2col">
+        
+        {{!-- Statistiques de Terrain --}}
+        <div class="terrain-stats">
+          <h3>{{localize "DNG.SheetLabels.TerrainStats"}}</h3>
+          <div class="stats-grid">
+            {{#each system.stats.terrain as |stat key|}}
+            <div class="stat-row flexrow flex-group-center">
+              <label for="system.stats.terrain.{{key}}.value" class="stat-label rollable flexlarge align-left" 
+                     data-stat-type="terrain" data-stat-name="{{key}}" data-action="rollStat">
+                {{localize (lookup @root.config.terrainStats key)}}
+              </label>
+              <input type="text" name="system.stats.terrain.{{key}}.value" value="{{stat.value}}" 
+                     data-dtype="Number" min="1" max="5"/>
+              <span class="stat-die">d{{stat.die}}</span>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+
+        {{!-- Statistiques de Combat --}}
+        <div class="combat-stats">
+          <h3>{{localize "DNG.SheetLabels.CombatStats"}}</h3>
+          <div class="stats-grid">
+            {{#each system.stats.combat as |stat key|}}
+            <div class="stat-row flexrow flex-group-center">
+              <label for="system.stats.combat.{{key}}.value" class="stat-label rollable flexlarge align-left" 
+                     data-stat-type="combat" data-stat-name="{{key}}" data-action="rollStat">
+                {{localize (lookup @root.config.combatStats key)}}
+              </label>
+              <input type="text" name="system.stats.combat.{{key}}.value" value="{{stat.value}}" 
+                     data-dtype="Number" min="1" max="5"/>
+              <span class="stat-die">d{{stat.die}}</span>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    {{!-- Capacités Tab --}}
+    <div class="tab features" data-group="primary" data-tab="features">
+      {{> "systems/dng/templates/actor/parts/actor-features.hbs"}}
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    {{!-- Owned Items Tab --}}
+    <div class="tab items" data-group="primary" data-tab="items">
+       {{> "systems/dng/templates/actor/parts/actor-items.hbs"}}
+    </div>
+
+    {{!-- Owned Spells Tab --}}
+    <div class="tab spells" data-group="primary" data-tab="spells">
+      {{> "systems/dng/templates/actor/parts/actor-spells.hbs"}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+      {{> "systems/dng/templates/actor/parts/actor-effects.hbs"}}
+    </div>
+
+  </section>
+</form>

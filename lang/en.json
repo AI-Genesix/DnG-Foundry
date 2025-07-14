@@ -1,0 +1,114 @@
+{
+  "DNG": {
+    "Resource": {
+      "PV": { "long": "Points de Vie", "abbr": "PV" },
+      "PP": { "long": "Points de Pouvoir", "abbr": "PP" },
+      "PC": { "long": "Puissance Cachée", "abbr": "PC" },
+      "PH": { "long": "Points Héroïques", "abbr": "PH" }
+    },
+    "Terrain": {
+      "Force": { "long": "Force", "abbr": "FOR" },
+      "Agilite": { "long": "Agilité", "abbr": "AGI" },
+      "Instinct": { "long": "Instinct", "abbr": "INS" },
+      "Sagesse": { "long": "Sagesse", "abbr": "SAG" },
+      "Sympathie": { "long": "Sympathie", "abbr": "SYM" },
+      "Charisme": { "long": "Charisme", "abbr": "CHA" }
+    },
+    "Combat": {
+      "Attaque": { "long": "Attaque", "abbr": "ATQ" },
+      "Defense": { "long": "Défense", "abbr": "DEF" },
+      "AtkSpe": { "long": "Attaque Spéciale", "abbr": "ATS" },
+      "DefSpe": { "long": "Défense Spéciale", "abbr": "DFS" },
+      "Precision": { "long": "Précision", "abbr": "PRE" },
+      "Esquive": { "long": "Esquive", "abbr": "ESQ" }
+    },
+    "SheetLabels": {
+      "Actor": "Feuille de Personnage DnG",
+      "Item": "Feuille d'Objet DnG",
+      "Resources": "Ressources",
+      "TerrainStats": "Statistiques de Terrain",
+      "CombatStats": "Statistiques de Combat",
+      "PokemonInfo": "Informations Pokémon",
+      "Level": "Niveau",
+      "Class": "Classe",
+      "Species": "Espèce",
+      "Type": "Type",
+      "Grade": "Grade", 
+      "Style": "Style",
+      "BaroudeurAmeliorations": "Améliorations Baroudeur"
+    },
+    "Pokemon": {
+      "Classe": {
+        "Baroudeur": "Baroudeur",
+        "Eclaireur": "Éclaireur", 
+        "Secouriste": "Secouriste",
+        "NonDefini": "Non défini"
+      },
+      "Type": {
+        "Normal": "Normal",
+        "Feu": "Feu",
+        "Eau": "Eau",
+        "Electrik": "Électrik",
+        "Plante": "Plante",
+        "Glace": "Glace",
+        "Combat": "Combat",
+        "Poison": "Poison",
+        "Sol": "Sol",
+        "Vol": "Vol",
+        "Psy": "Psy",
+        "Insecte": "Insecte",
+        "Roche": "Roche",
+        "Spectre": "Spectre",
+        "Dragon": "Dragon",
+        "Tenebres": "Ténèbres",
+        "Acier": "Acier",
+        "Fee": "Fée"
+      },
+      "Grade": {
+        "InTraining": "In-Training",
+        "Rookie": "Rookie", 
+        "Champion": "Champion",
+        "Ultimate": "Ultimate"
+      },
+      "Style": {
+        "Offensif": "Offensif",
+        "Defensif": "Défensif",
+        "Physique": "Physique",
+        "Special": "Spécial",
+        "Rapide": "Rapide",
+        "Complet": "Complet"
+      }
+    },
+    "Roll": {
+      "StatDie": "Dé de Stat",
+      "CritDie": "Dé de Critique",
+      "Critical": "Critique !",
+      "Total": "Total"
+    },
+    "Item": {
+      "Spell": {
+        "SpellLVL": "Sorts de niveau {level}",
+        "AddLVL": "Ajouter LVL {level}"
+      }
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Activer/Désactiver l'Effet",
+      "Temporary": "Effets Temporaires",
+      "Passive": "Effets Passifs",
+      "Inactive": "Effets Inactifs"
+    }
+  },
+
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage",
+      "npc": "PNJ"
+    },
+    "Item": {
+      "item": "Objet",
+      "feature": "Capacité",
+      "sort": "Sort"
+    }
+  }
+}
