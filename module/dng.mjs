@@ -67,6 +67,76 @@ Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
 
+// Helper pour calculer les dégâts des capacités
+Handlebars.registerHelper('calculateDamage', function(rank, efficacite, critique) {
+  if (typeof rank !== 'number') rank = parseInt(rank) || 1;
+  if (typeof efficacite !== 'number') efficacite = parseInt(efficacite) || 0;
+  if (typeof critique !== 'boolean') critique = !!critique;
+  
+  let baseDice = 1 + rank;
+  let modifiedDice = Math.max(1, baseDice + efficacite);
+  let diceType = critique ? 'd6' : 'd4';
+  
+  if (modifiedDice === 0 || (baseDice + efficacite) <= 0) {
+    return '1 dégât fixe';
+  }
+  
+  return `${modifiedDice}${diceType}`;
+});
+
+// Helper pour additionner deux nombres
+Handlebars.registerHelper('addNumbers', function(a, b) {
+  return parseInt(a) + parseInt(b);
+});
+
+// Helper pour les cibles de capacité
+Handlebars.registerHelper('getCible', function(cible) {
+  const cibles = {
+    cible_unique: 'Cible unique',
+    cone_petit: 'Cône petit',
+    cone_grand: 'Cône grand', 
+    cercle_petit: 'Cercle petit',
+    cercle_grand: 'Cercle grand',
+    zone: 'Zone'
+  };
+  return cibles[cible] || cible;
+});
+
+// Helper pour les portées de capacité
+Handlebars.registerHelper('getPortee', function(portee) {
+  const portees = {
+    contact: 'Contact',
+    portee_courte: 'Portée courte',
+    portee_longue: 'Portée longue'
+  };
+  return portees[portee] || portee;
+});
+
+// Helper pour les types Pokemon
+Handlebars.registerHelper('getTypePokemon', function(type) {
+  const types = {
+    normal: 'Normal',
+    feu: 'Feu',
+    eau: 'Eau',
+    plante: 'Plante',
+    electrik: 'Électrik',
+    glace: 'Glace',
+    combat: 'Combat',
+    poison: 'Poison',
+    sol: 'Sol',
+    vol: 'Vol',
+    psy: 'Psy',
+    insecte: 'Insecte',
+    roche: 'Roche',
+    spectre: 'Spectre',
+    dragon: 'Dragon',
+    tenebres: 'Ténèbres',
+    acier: 'Acier',
+    fee: 'Fée'
+  };
+  return types[type] || type;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */

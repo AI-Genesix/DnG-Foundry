@@ -109,6 +109,7 @@ export class DnGActorSheet extends ActorSheet {
     const talentsExplorateur = [];
     const domaines = [];
     const handicaps = [];
+    const capacites = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -134,6 +135,9 @@ export class DnGActorSheet extends ActorSheet {
       else if (i.type === 'handicap') {
         handicaps.push(i);
       }
+      else if (i.type === 'capacite') {
+        capacites.push(i);
+      }
     }
 
     // Assign and return
@@ -143,6 +147,7 @@ export class DnGActorSheet extends ActorSheet {
     context.talentsExplorateur = talentsExplorateur;
     context.domaines = domaines;
     context.handicaps = handicaps;
+    context.capacites = capacites;
   }
 
   /* -------------------------------------------- */
@@ -209,6 +214,22 @@ export class DnGActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.on('click', '.rollable', this._onRoll.bind(this));
+
+    // Damage roll buttons
+    html.on('click', '.damage-roll', this._onDamageRoll.bind(this));
+    
+    // Manual damage roll button
+    html.on('click', '.manual-damage-roll', this._onManualDamageRoll.bind(this));
+    
+    // Modifier increase/decrease buttons
+    html.on('click', '.modifier-increase', this._onModifierIncrease.bind(this));
+    html.on('click', '.modifier-decrease', this._onModifierDecrease.bind(this));
+    
+    // Critical checkbox change
+    html.on('change', '.critical-checkbox', this._onCriticalToggle.bind(this));
+    
+    // Capacité collapse/expand
+    html.on('click', '.capacite-header.clickable', this._onCapaciteToggle.bind(this));
 
     // Type selector color change
     html.on('change', '.type-select', this._onTypeChange.bind(this));
@@ -296,6 +317,209 @@ export class DnGActorSheet extends ActorSheet {
   }
 
   /**
+   * Handle damage roll buttons
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  async _onDamageRoll(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const rank = parseInt(button.dataset.rank);
+    const modifier = parseInt(button.dataset.modifier);
+    
+    // Check if critical is enabled for this capacity
+    const capacityItem = button.closest('.capacite');
+    const criticalCheckbox = capacityItem.querySelector('.critical-checkbox');
+    const critical = criticalCheckbox ? criticalCheckbox.checked : false;
+    
+    // Check for damage modifier
+    const damageModifierInput = capacityItem.querySelector('.damage-modifier');
+    const damageModifier = damageModifierInput ? parseInt(damageModifierInput.value) || 0 : 0;
+    
+    // Calculate dice count
+    let baseDice = 1 + rank;
+    let modifiedDice = Math.max(1, baseDice + modifier);
+    let diceType = critical ? 'd6' : 'd4';
+    
+    // Handle ineffective attacks
+    if (modifiedDice === 0 || (baseDice + modifier) <= 0) {
+      // Ineffective attack - 1 fixed damage
+      let finalDamage = 1 + damageModifier;
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<div class="dice-roll">
+          <div class="dice-result">
+            <div class="dice-formula">Attaque inefficace${damageModifier !== 0 ? ` + ${damageModifier}` : ''}</div>
+            <div class="dice-total">${finalDamage} dégât${finalDamage > 1 ? 's' : ''}</div>
+          </div>
+        </div>`,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL
+      });
+      return;
+    }
+    
+    // Create the roll formula
+    let formula = `${modifiedDice}${diceType}`;
+    if (damageModifier !== 0) {
+      formula += damageModifier > 0 ? ` + ${damageModifier}` : ` - ${Math.abs(damageModifier)}`;
+    }
+    
+    // Create flavor text
+    let effectText = '';
+    if (modifier === 0) effectText = 'Efficacité neutre';
+    else if (modifier === 1) effectText = 'Super efficace';
+    else if (modifier === 2) effectText = 'Doublement super efficace';
+    else if (modifier === -1) effectText = 'Peu efficace';
+    else if (modifier === -2) effectText = 'Doublement peu efficace';
+    else if (modifier === -3) effectText = 'Inefficace';
+    
+    if (critical) effectText += ' (Critique)';
+    
+    // Find the capacity name
+    const capacityName = capacityItem.querySelector('.capacite-name').textContent;
+    
+    const flavor = `${capacityName} - ${effectText}`;
+    
+    // Execute the roll
+    const roll = new Roll(formula, this.actor.getRollData());
+    await roll.evaluate();
+    
+    // Check if final result is 0 or less and apply minimum damage rule
+    if (roll.total <= 0) {
+      // Create a new roll with fixed 1 damage + modifier
+      let fixedDamage = 1;
+      if (damageModifier !== 0) {
+        fixedDamage += damageModifier;
+      }
+      
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<div class="dice-roll">
+          <div class="dice-result">
+            <div class="dice-formula">Attaque inefficace → 1 dégât fixe${damageModifier !== 0 ? ` + ${damageModifier}` : ''}</div>
+            <div class="dice-total">${Math.max(1, fixedDamage)} dégât${Math.max(1, fixedDamage) > 1 ? 's' : ''}</div>
+          </div>
+        </div>`,
+        flavor: flavor,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL
+      });
+    } else {
+      // Normal roll with details visible
+      await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavor,
+        rollMode: game.settings.get('core', 'rollMode'),
+      });
+    }
+  }
+
+  /**
+   * Handle manual damage roll button
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  async _onManualDamageRoll(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const manualGroup = button.closest('.manual-damage-section');
+    const capacityItem = button.closest('.capacite');
+    
+    const diceCount = parseInt(manualGroup.querySelector('.manual-dice-count').value) || 1;
+    const diceType = manualGroup.querySelector('.manual-dice-type').value || 'd4';
+    
+    // Check for damage modifier
+    const damageModifierInput = capacityItem.querySelector('.damage-modifier');
+    const damageModifier = damageModifierInput ? parseInt(damageModifierInput.value) || 0 : 0;
+    
+    // Check if critical is enabled
+    const criticalCheckbox = capacityItem.querySelector('.critical-checkbox');
+    const critical = criticalCheckbox ? criticalCheckbox.checked : false;
+    
+    // Adjust dice type if critical
+    const finalDiceType = critical && diceType === 'd4' ? 'd6' : diceType;
+    
+    // Find the capacity name
+    const capacityName = capacityItem.querySelector('.capacite-name').textContent;
+    
+    // Create formula
+    let formula = `${diceCount}${finalDiceType}`;
+    if (damageModifier !== 0) {
+      formula += damageModifier > 0 ? ` + ${damageModifier}` : ` - ${Math.abs(damageModifier)}`;
+    }
+    
+    let flavor = `${capacityName} - Lancer manuel`;
+    if (critical) flavor += ' (Critique)';
+    
+    // Execute the roll
+    const roll = new Roll(formula, this.actor.getRollData());
+    await roll.evaluate();
+    
+    // Check if final result is 0 or less and apply minimum damage rule
+    if (roll.total <= 0) {
+      // Create a new roll with fixed 1 damage + modifier
+      let fixedDamage = 1;
+      if (damageModifier !== 0) {
+        fixedDamage += damageModifier;
+      }
+      
+      ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<div class="dice-roll">
+          <div class="dice-result">
+            <div class="dice-formula">Lancer inefficace → 1 dégât fixe${damageModifier !== 0 ? ` + ${damageModifier}` : ''}</div>
+            <div class="dice-total">${Math.max(1, fixedDamage)} dégât${Math.max(1, fixedDamage) > 1 ? 's' : ''}</div>
+          </div>
+        </div>`,
+        flavor: flavor,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL
+      });
+    } else {
+      // Normal roll with details visible
+      await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: flavor,
+        rollMode: game.settings.get('core', 'rollMode'),
+      });
+    }
+  }
+
+  /**
+   * Handle apply modifier button
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  async _onApplyModifier(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const modifierGroup = button.closest('.damage-modifier-section');
+    const capacityItem = button.closest('.capacite');
+    
+    const damageModifier = parseInt(modifierGroup.querySelector('.damage-modifier').value) || 0;
+    
+    if (damageModifier === 0) {
+      ui.notifications.info("Aucun modificateur à appliquer.");
+      return;
+    }
+    
+    // Find the capacity name
+    const capacityName = capacityItem.querySelector('.capacite-name').textContent;
+    
+    // Show notification
+    const modText = damageModifier > 0 ? `+${damageModifier}` : `${damageModifier}`;
+    ui.notifications.info(`Modificateur ${modText} prêt pour la prochaine attaque de ${capacityName}`);
+    
+    // Add visual feedback
+    button.style.background = '#28a745';
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+      button.style.background = '#17a2b8';
+      button.innerHTML = '<i class="fas fa-plus-minus"></i>';
+    }, 3000);
+  }
+
+  /**
    * Handle type selector changes to apply colors
    * @param {Event} event   The originating change event
    * @private
@@ -346,5 +570,82 @@ export class DnGActorSheet extends ActorSheet {
         select.style.color = this._getContrastColor(color);
       }
     });
+  }
+
+  /**
+   * Handle critical checkbox toggle
+   * @param {Event} event - The originating change event
+   * @private
+   */
+  _onCriticalToggle(event) {
+    const checkbox = event.currentTarget;
+    const capacityItem = checkbox.closest('.capacite');
+    const damageButtons = capacityItem.querySelectorAll('.damage-roll');
+    
+    // Update all damage displays
+    damageButtons.forEach(button => {
+      const rank = parseInt(button.dataset.rank);
+      const modifier = parseInt(button.dataset.modifier);
+      const critical = checkbox.checked;
+      
+      // Calculate new damage
+      let baseDice = 1 + rank;
+      let modifiedDice = Math.max(1, baseDice + modifier);
+      let diceType = critical ? 'd6' : 'd4';
+      
+      let damageText;
+      if (modifiedDice === 0 || (baseDice + modifier) <= 0) {
+        damageText = '1 dégât fixe';
+      } else {
+        damageText = `${modifiedDice}${diceType}`;
+      }
+      
+      // Update the display
+      const damageDisplay = button.querySelector('.damage-display');
+      if (damageDisplay) {
+        damageDisplay.textContent = damageText;
+      }
+    });
+  }
+
+  /**
+   * Handle modifier increase button click
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  _onModifierIncrease(event) {
+    event.preventDefault();
+    const input = event.currentTarget.parentElement.querySelector('.damage-modifier');
+    const currentValue = parseInt(input.value) || 0;
+    input.value = Math.min(20, currentValue + 1);
+  }
+
+  /**
+   * Handle modifier decrease button click
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  _onModifierDecrease(event) {
+    event.preventDefault();
+    const input = event.currentTarget.parentElement.querySelector('.damage-modifier');
+    const currentValue = parseInt(input.value) || 0;
+    input.value = Math.max(-20, currentValue - 1);
+  }
+
+  /**
+   * Handle capacité toggle (collapse/expand)
+   * @param {Event} event - The originating click event
+   * @private
+   */
+  _onCapaciteToggle(event) {
+    event.preventDefault();
+    
+    // Don't trigger if clicking on controls
+    if (event.target.closest('.item-controls')) {
+      return;
+    }
+    
+    const capaciteElement = event.currentTarget.closest('.capacite');
+    capaciteElement.classList.toggle('collapsed');
   }
 }

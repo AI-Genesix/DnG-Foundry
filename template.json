@@ -139,7 +139,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "trait_espece", "talent_explorateur", "domaine", "handicap"],
+    "types": ["item", "feature", "trait_espece", "talent_explorateur", "domaine", "handicap", "capacite"],
     "templates": {
       "base": {
         "description": ""
@@ -172,6 +172,15 @@
     "handicap": {
       "templates": ["base"],
       "description": ""
+    },
+    "capacite": {
+      "templates": ["base"],
+      "type": "",
+      "rank": 1,
+      "cible": "",
+      "portee": "",
+      "effet": "",
+      "critique": ""
     }
   }
 }

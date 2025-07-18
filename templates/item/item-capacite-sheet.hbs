@@ -1,0 +1,103 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="Nom de la capacité"/>
+      </h1>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Détails</a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab" data-group="primary" data-tab="description">
+      
+      <div class="form-group">
+        <label for="system.type">Type</label>
+        <select name="system.type" data-dtype="String" class="capacite-type-select">
+          {{#select system.type}}
+          <option value="">-- Choisir un type --</option>
+          {{#each config.typesPokemon as |typeData key|}}
+            <option value="{{key}}">{{typeData.name}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="system.rank">Niveau</label>
+        <select name="system.rank" data-dtype="Number" class="capacite-rank-select">
+          {{#select system.rank}}
+          <option value="1">Niveau 1</option>
+          <option value="2">Niveau 2</option>
+          <option value="3">Niveau 3</option>
+          <option value="4">Niveau 4</option>
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="system.cible">Cible</label>
+        <select name="system.cible" data-dtype="String" class="capacite-cible-select">
+          {{#select system.cible}}
+          <option value="">-- Choisir une cible --</option>
+          {{#each config.ciblesCapacite as |cibleName key|}}
+            <option value="{{key}}">{{cibleName}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="system.portee">Portée</label>
+        <select name="system.portee" data-dtype="String" class="capacite-portee-select">
+          {{#select system.portee}}
+          <option value="">-- Choisir une portée --</option>
+          {{#each config.porteesCapacite as |porteeName key|}}
+            <option value="{{key}}">{{porteeName}}</option>
+          {{/each}}
+          {{/select}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="system.effet">Effet</label>
+        <textarea name="system.effet" rows="6" placeholder="Décrivez l'effet de cette capacité...">{{system.effet}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="system.critique">Effet critique</label>
+        <textarea name="system.critique" rows="4" placeholder="Effet supplémentaire en cas de critique...">{{system.critique}}</textarea>
+        <p class="hint">Cet effet se déclenche uniquement lors d'un coup critique.</p>
+      </div>
+
+      <div class="form-group damage-preview">
+        <label>Aperçu des dégâts</label>
+        <div class="damage-info">
+          <div class="damage-row">
+            <span class="damage-label">Normal:</span>
+            <span class="damage-value" data-damage-type="normal">{{calculateDamage system.rank 0 false}}</span>
+          </div>
+          <div class="damage-row">
+            <span class="damage-label">Super efficace:</span>
+            <span class="damage-value" data-damage-type="super">{{calculateDamage system.rank 1 false}}</span>
+          </div>
+          <div class="damage-row">
+            <span class="damage-label">Peu efficace:</span>
+            <span class="damage-value" data-damage-type="weak">{{calculateDamage system.rank -1 false}}</span>
+          </div>
+          <div class="damage-row">
+            <span class="damage-label">Critique:</span>
+            <span class="damage-value" data-damage-type="critical">{{calculateDamage system.rank 0 true}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</form>

@@ -669,3 +669,79 @@ DNG.getTraitEffect = function(traitName) {
 DNG.getTalentEffect = function(talentName) {
   return this.talentsExplorateur[talentName]?.effect || '';
 };
+
+/**
+ * Types Pokemon avec leurs couleurs
+ * @type {Object}
+ */
+DNG.typesPokemon = {
+  normal: { name: 'Normal', color: '#A8A878' },
+  feu: { name: 'Feu', color: '#F08030' },
+  eau: { name: 'Eau', color: '#6890F0' },
+  plante: { name: 'Plante', color: '#78C850' },
+  electrik: { name: 'Électrik', color: '#F8D030' },
+  glace: { name: 'Glace', color: '#98D8D8' },
+  combat: { name: 'Combat', color: '#C03028' },
+  poison: { name: 'Poison', color: '#A040A0' },
+  sol: { name: 'Sol', color: '#E0C068' },
+  vol: { name: 'Vol', color: '#A890F0' },
+  psy: { name: 'Psy', color: '#F85888' },
+  insecte: { name: 'Insecte', color: '#A8B820' },
+  roche: { name: 'Roche', color: '#B8A038' },
+  spectre: { name: 'Spectre', color: '#705898' },
+  dragon: { name: 'Dragon', color: '#7038F8' },
+  tenebres: { name: 'Ténèbres', color: '#705848' },
+  acier: { name: 'Acier', color: '#B8B8D0' },
+  fee: { name: 'Fée', color: '#EE99AC' }
+};
+
+/**
+ * Cibles possibles pour les capacités
+ * @type {Object}
+ */
+DNG.ciblesCapacite = {
+  cible_unique: 'Cible unique',
+  cone_petit: 'Cône petit',
+  cone_grand: 'Cône grand', 
+  cercle_petit: 'Cercle petit',
+  cercle_grand: 'Cercle grand',
+  zone: 'Zone'
+};
+
+/**
+ * Portées possibles pour les capacités
+ * @type {Object}
+ */
+DNG.porteesCapacite = {
+  contact: 'Contact',
+  portee_courte: 'Portée courte',
+  portee_longue: 'Portée longue'
+};
+
+/**
+ * Obtient la couleur d'un type Pokemon
+ * @param {string} type - Type Pokemon
+ * @returns {string} - Code couleur hexadécimal
+ */
+DNG.getTypeColor = function(type) {
+  return this.typesPokemon[type]?.color || '#68A090';
+};
+
+/**
+ * Calcule les dégâts d'une capacité
+ * @param {number} rank - Rang de la capacité (1-4)
+ * @param {number} efficacite - Modificateur d'efficacité (-3 à +2)
+ * @param {boolean} critique - Si c'est un coup critique
+ * @returns {string} - Formule de dégâts
+ */
+DNG.calculateDamage = function(rank, efficacite = 0, critique = false) {
+  let baseDice = 1 + rank;
+  let modifiedDice = Math.max(1, baseDice + efficacite);
+  let diceType = critique ? 'd6' : 'd4';
+  
+  if (modifiedDice === 0 || (baseDice + efficacite) <= 0) {
+    return '1 dégât fixe';
+  }
+  
+  return `${modifiedDice}${diceType}`;
+};
